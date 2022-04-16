@@ -37,7 +37,15 @@ const createPost = (req, res) => {
 };
 
 const readPosts = (req, res) => {
-  return res.status(200).send(posts);
+  const postsWithUsers = posts.map((p) => {
+    const user = users.find((u) => u.id === p.userID);
+
+    p.user = user;
+
+    return p;
+  });
+
+  return res.status(200).send(postsWithUsers);
 };
 
 const readPostsByUserID = (req, res) => {
